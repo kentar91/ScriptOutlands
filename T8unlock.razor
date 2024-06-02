@@ -1,0 +1,560 @@
+#script for TMAP by Kentar 01042024
+
+clearsysmsg
+unsetvar chest
+setvar! locked 0
+
+removelist 'lootTypes'
+#se voglio rifare la lista
+#create loot list
+
+if not listexists 'lootTypes'
+    overhead 'Compiling list...' 1150
+    createlist 'lootTypes'
+   
+    # Chain Link
+    pushlist 'lootTypes' 0xa8c6
+    # MCD
+    pushlist 'lootTypes' 0x42bf
+    # Research Material
+    pushlist 'lootTypes' 0x5F72
+    # Mastery Scroll
+    pushlist 'lootTypes' 0x227a
+    # Aspect Extract
+    pushlist 'lootTypes' 0xefc
+    # Aspect Core
+    pushlist 'lootTypes' 0xf91
+    #Aspect Distillation "flask"
+    pushlist 'lootTypes' 17686
+    #chroma distil
+    pushlist 'lootTypes' 4026   
+    #chroma core
+    #phylactery
+    pushlist 'lootTypes' 576
+    pushlist 'lootTypes' 4025
+    #redline bottle
+    pushlist 'lootTypes' 25359
+    # Skill Orb
+    pushlist 'lootTypes' 0x5740
+    # Skill Scroll
+    pushlist 'lootTypes' 0xef3
+    # Research Mats
+    pushlist 'lootTypes' 0x72a4
+    # Tmap
+    pushlist 'lootTypes' 0x14ec
+    
+    # Black Pearl
+    pushlist 'lootTypes' 0xf7a
+    # Blood Moss
+    pushlist 'lootTypes' 0xf7b
+    # Mandrake Root
+    pushlist 'lootTypes' 0xf86
+    # Garlic
+    pushlist 'lootTypes' 0xf84
+    # Ginseng
+    pushlist 'lootTypes' 0xf85
+    # Nightshade
+    pushlist 'lootTypes' 0xf88
+    # Spiders Silk
+    pushlist 'lootTypes' 0xf8d
+    # Sulphurous Ash
+    pushlist 'lootTypes' 0xf8c
+    
+    # Amber
+    pushlist 'lootTypes' 0xf25
+    # Amethyst
+    pushlist 'lootTypes' 0xf16
+    # Citrine
+    pushlist 'lootTypes' 0xf15
+    # Diamond
+    pushlist 'lootTypes' 0xf26
+    # Emerald
+    pushlist 'lootTypes' 0xf10
+    # Ruby
+    pushlist 'lootTypes' 0xf13
+    # Sapphire
+    pushlist 'lootTypes' 0xf19
+    # Star Sapphire
+    pushlist 'lootTypes' 0xf21
+    # Tourmaline
+    pushlist 'lootTypes' 0xf2d
+    
+    # Magic spellbook
+    pushlist 'lootTypes' 0xefa
+    
+    # Arrows
+    pushlist 'lootTypes' 0xf3f
+    # Bandages
+    pushlist 'lootTypes' 0xe21
+    # Bolts
+    pushlist 'lootTypes' 0x1bfb
+
+//Wrestling
+    #cestus "caesti" 
+    pushlist 'lootTypes' 31141
+    #fistblade "fistblade" 
+    pushlist 'lootTypes' 31142
+    #martial manual "martial arts scroll" 
+    pushlist 'lootTypes' 22187
+   
+//Shields   
+    pushlist 'lootTypes' 0x1b72 //BronzeShields
+    pushlist 'lootTypes' 0x1b73 //Buckler
+    pushlist 'lootTypes' 0x1b7b //MetalShield
+    pushlist 'lootTypes' 0x1b74 //MetalKiteShield
+    pushlist 'lootTypes' 0x1b79 //TearKiteShield
+    pushlist 'lootTypes' 0x1b7a //WoodenShield
+    pushlist 'lootTypes' 0x1b76 //HeaterShield
+    pushlist 'lootTypes' 0x1b77 //HeaterShield
+//Platemail
+   #platemail arms "platemail arms"
+    pushlist 'lootTypes' 5143
+    #bascinet "norse helm"
+    pushlist 'lootTypes' 5132
+    #close helm "close helm"
+    pushlist 'lootTypes' 5129 
+    #female platemail chest "plate armor"
+    pushlist 'lootTypes' 7173
+    #platemail gloves "platemail gloves"
+    pushlist 'lootTypes' 5144
+    #platemail gorget "platemail gorget"
+    pushlist 'lootTypes' 5139
+    #platemail helm "plate helm"
+    pushlist 'lootTypes' 5138 
+    #platemail leggings "platemail legs"
+    pushlist 'lootTypes' 5146
+    #platemail chest "platemail"
+    pushlist 'lootTypes' 5142
+    #norse helm "bascinet"
+    pushlist 'lootTypes' 5135
+    #platemail skirt "leather skirt"#(pre expansion)
+    pushlist 'lootTypes' 7177 
+    #platemail skirt "plate skirt"
+    pushlist 'lootTypes' 31008
+//Chainmail
+    #chainmail arms "ringmail sleeves"#(pre expansion)
+    pushlist 'lootTypes' 5103 
+    #chainmail arms "chain arms"
+    pushlist 'lootTypes' 31005
+    #chainmail chest "chainmail tunic"
+    pushlist 'lootTypes' 5060
+    #chainmail gloves "ringmail gloves"#(pre expansion)
+    pushlist 'lootTypes' 5106 
+    #chainmail gloves "chain gloves"
+    pushlist 'lootTypes' 31015
+    #chainmail gorget "leather gorget"#(pre expansion)
+    pushlist 'lootTypes' 5063 
+    #chainmail gorget "chain gorget"
+    pushlist 'lootTypes' 31006
+    #chainmail coif "chainmail coif"
+    pushlist 'lootTypes' 5056
+    #chainmail leggings "chainmail leggings"
+    pushlist 'lootTypes' 5059
+    #chainmail skirt "leather skirt"#(pre expansion)
+    pushlist 'lootTypes' 7177 
+    #chainmail skirt "chain skirt"
+    pushlist 'lootTypes' 31007
+//Ringmail
+      #orc helm "orc helm"
+    pushlist 'lootTypes' 7947 
+    #ringmail arms "ringmail sleeves"
+    pushlist 'lootTypes' 5103
+    #ringmail chest "ringmail tunic"
+    pushlist 'lootTypes' 5101
+    #ringmail gloves "ringmail gloves"
+    pushlist 'lootTypes' 5106
+    #ringmail gorget "studded gorget"#(pre expansion)
+    pushlist 'lootTypes' 5078 
+    #ringmail gorget "ringmail gorget"
+    pushlist 'lootTypes' 31009
+    #ringmail helm "helmet"
+    pushlist 'lootTypes' 5131
+    #ringmail leggings "ringmail leggings"
+    pushlist 'lootTypes' 5105
+    #ringmail skirt "leather skirt"#(pre expansion)
+    pushlist 'lootTypes' 7177 
+    #ringmail skirt "ringmail skirt"
+    pushlist 'lootTypes' 31010
+//Studded
+     #female studded chest "studded armor"
+    pushlist 'lootTypes' 7170 
+    #studded arms "studded sleeves"
+    pushlist 'lootTypes' 5076
+    #studded gloves "studded gloves"
+    pushlist 'lootTypes' 5085
+    #studded gorget "studded gorget"
+    pushlist 'lootTypes' 5078
+    #studded cap "leather cap"#(pre expansion)
+    pushlist 'lootTypes' 7610 
+    #studded cap "studded cap"
+    pushlist 'lootTypes' 31011
+    #studded leggings "studded leggings"
+    pushlist 'lootTypes' 5089
+    #studded chest "studded tunic"
+    pushlist 'lootTypes' 5090
+    #studded skirt "leather skirt"#(pre expansion)
+    pushlist 'lootTypes' 7177 
+    #studded skirt "studded skirt"
+    pushlist 'lootTypes' 31012
+    #studded bustier "studded bustier"
+    pushlist 'lootTypes' 7181
+
+//Bone Armor
+ #bone arms "bone arms"
+    pushlist 'lootTypes' 5203
+    #bone chest "bone armor"
+    pushlist 'lootTypes' 5204
+    #bone gloves "bone gloves"
+    pushlist 'lootTypes' 5205
+    #bone gorget "studded gorget"#(pre expansion)
+    pushlist 'lootTypes' 5078 
+    #bone gorget "bone gorget"
+    pushlist 'lootTypes' 31003
+    #bone helm "bone helmet"
+    pushlist 'lootTypes' 5201
+    #bone legs "bone legs"
+    pushlist 'lootTypes' 5207
+    #bone skirt "leather skirt"#(pre expansion)
+    pushlist 'lootTypes' 7177 
+    #bone skirt "bone skirt"
+    pushlist 'lootTypes' 31004
+
+//Leather 
+#female leather chest "leather armor"
+    pushlist 'lootTypes' 7175 
+    #leather arms "leather sleeves"
+    pushlist 'lootTypes' 5061
+    #leather chest "leather tunic"
+    pushlist 'lootTypes' 5075
+    #leather gloves "leather Gloves"
+    pushlist 'lootTypes' 5070
+    #leather gorget "leather gorget"
+    pushlist 'lootTypes' 5063
+    #leather cap "leather cap"
+    pushlist 'lootTypes' 7610
+    #leather bustier "leather bustier"
+    pushlist 'lootTypes' 7179
+    #leather leggings "leather leggings"
+    pushlist 'lootTypes' 5074 
+    #leather shorts "leather shorts"
+    pushlist 'lootTypes' 7169
+    #leather skirt "leather skirt"
+    pushlist 'lootTypes' 7177
+    #leather jerkin "leather jerkin"
+    pushlist 'lootTypes' 31191
+
+    
+//Fencing
+    #assassin's knife ' "assassins dagger" 
+    pushlist 'lootTypes' 30996
+    #epee "epee"
+    pushlist 'lootTypes'30989
+    #fencing sabre "sabre"
+    pushlist 'lootTypes' 30998
+    #hunting knife "tracker knife"
+    pushlist 'lootTypes' 31188
+    #kryss "kryss"
+    pushlist 'lootTypes' 5121
+    #kukri "kukri"
+    pushlist 'lootTypes' 31176
+    #pitchfork "pitchfork"
+    pushlist 'lootTypes' 3719
+    #rapier "rapier"
+    pushlist 'lootTypes' 30997
+    #sarissa "sarissa"
+    pushlist 'lootTypes' 30992
+    #short spear "short spear"
+    pushlist 'lootTypes' 5123
+    #spear "Long Spear"
+    pushlist 'lootTypes' 3938
+    #war fork "war fork"
+    pushlist 'lootTypes' 5125 
+//Shields
+#bone shield "bone shield"
+    pushlist 'lootTypes' 31130
+    #bronze shield "bronze shield"
+    pushlist 'lootTypes' 7026
+    #buckler "buckler "
+    pushlist 'lootTypes' 7027
+    #chaos shield "Chaos shield"
+    pushlist 'lootTypes' 7107
+    #heater shield "heater shield"
+    pushlist 'lootTypes' 7031
+    #metal kite shield "kite shield"
+    pushlist 'lootTypes' 7029
+    #metal shield "metal shield"
+    pushlist 'lootTypes' 7035
+    #order shield "Order shield"
+    pushlist 'lootTypes' 7109
+    #parry dagger "parrying gauche"
+    pushlist 'lootTypes' 31002
+    #wooden kite shield "kite shield"
+    pushlist 'lootTypes' 7033
+    #wooden shield "wooden shield"
+    pushlist 'lootTypes' 7034
+       
+//Macing
+    #black staff "black staff"
+    pushlist 'lootTypes' 3568
+    #club "club"
+    pushlist 'lootTypes' 5044
+    #cudgel "cudgel"
+    pushlist 'lootTypes' 31014
+    #flail "flail"
+    pushlist 'lootTypes' 30999
+    #flanged mace "flanged mace"
+    pushlist 'lootTypes' 30991
+    #giant club "giant club"
+    pushlist 'lootTypes' 31178
+    #giant spiked mace "giant spiked club"
+    pushlist 'lootTypes' 31182
+    #gnarled staff "gnarled staff"
+    pushlist 'lootTypes' 5112
+    #great mace "great mace"
+    pushlist 'lootTypes' 31180
+    #great sledge "sledgehammer"
+    pushlist 'lootTypes' 31001
+    #hammer pick "hammer pick"
+    pushlist 'lootTypes' 5181
+    #mace "mace"
+    pushlist 'lootTypes' 3932
+    #maul "maul"
+    pushlist 'lootTypes' 5179
+    #quarter staff "quarter staff"
+    pushlist 'lootTypes' 3721
+    #shepherd's crook ' "shepherd's crook""
+    pushlist 'lootTypes' 3713
+    #skull club "skull club"
+    pushlist 'lootTypes' 31000
+    #war axe "war axe"
+    pushlist 'lootTypes' 5040
+    #war hammer "war hammer"
+    pushlist 'lootTypes' 5177
+    #war mace "war mace"
+    pushlist 'lootTypes' 5127
+    
+//Swords
+    #axe "axe"
+    pushlist 'lootTypes' 3913
+    #bardiche "bardiche"
+    pushlist 'lootTypes' 3917
+    #battle axe "battle axe"
+    pushlist 'lootTypes' 3911
+    #broadsword "broadsword"
+    pushlist 'lootTypes' 3934
+    #cutlass "cutlass"
+    pushlist 'lootTypes' 5185
+    #double axe "double axe"
+    pushlist 'lootTypes' 3915
+    #executioners axe "executioner's axe" '
+    pushlist 'lootTypes' 3909
+    #great axe "giant axe"
+    pushlist 'lootTypes' 31190
+    #halberd "halberd"
+    pushlist 'lootTypes' 5182
+    #katana "katana"
+    pushlist 'lootTypes' 5119
+    #large battle axe "large battle axe"
+    pushlist 'lootTypes' 5115
+    #longsword "longsword"
+    pushlist 'lootTypes' 3937
+    #norse axe "norse axe"
+    pushlist 'lootTypes' 31128
+    #scimitar "scimitar"
+    pushlist 'lootTypes' 5046
+    #two handed axe "two handed axe"
+    pushlist 'lootTypes' 5187
+    #viking sword "viking sword"
+    pushlist 'lootTypes' 5049
+    #zweihander "zweihander"
+    pushlist 'lootTypes' 30988
+//Staffs
+    #sal staff "abyssal staff"
+    pushlist 'lootTypes' 31053
+    #ancestral staff "ancestral staff"
+    pushlist 'lootTypes' 31033
+    #angelspire staff "angelspire staff"
+    pushlist 'lootTypes' 31025
+    #boneshard staff "boneshard staff"
+    pushlist 'lootTypes' 31043
+    #burial staff "burial staff"
+    pushlist 'lootTypes' 31041
+    #celestial staff "celestial staff"
+    pushlist 'lootTypes' 31017
+    #chaos staff "chaos staff"
+    pushlist 'lootTypes' 31049
+    #darklight staff "darklight staff"
+    pushlist 'lootTypes' 31021
+    #dragonbone staff "dragonbone staff"
+    pushlist 'lootTypes' 31055
+    #druid staff "druid staff"
+    pushlist 'lootTypes' 31027
+    #fiendish staff "fiendish staff"
+    pushlist 'lootTypes' 31051
+    #helix staff "helix staff"
+    pushlist 'lootTypes' 31019
+    #nautilus staff "nautilus staff"
+    pushlist 'lootTypes' 31037
+    #necromancer staff "necromancer staff"
+    pushlist 'lootTypes' 31045
+    #paradox staff "paradox staff"
+    pushlist 'lootTypes' 31035
+    #prismatic staff "prismatic staff"
+    pushlist 'lootTypes' 31038
+    #razorcrest staff "razorcrest staff"
+    pushlist 'lootTypes' 31023
+    #shaman staff "shaman staff"
+    pushlist 'lootTypes' 31031
+    #summoner staff "summoner staff"
+    pushlist 'lootTypes' 31047
+    #vine staff "vine staff"
+    pushlist 'lootTypes' 31029
+//Archery  
+    #balestra "balestra"
+    pushlist 'lootTypes' 30993
+    #bow "bow"
+    pushlist 'lootTypes' 5042
+    #crossbow "crossbow"
+    pushlist 'lootTypes' 3920
+    #great bow "long bow"
+    pushlist 'lootTypes' 30990
+    #heavy crossbow "heavy crossbow"
+    pushlist 'lootTypes' 5117
+    #hunting bow "composite bow"
+    pushlist 'lootTypes' 30994
+    #pistol crossbow "stubnose crossbow"
+    pushlist 'lootTypes' 31184
+    #pistol crossbow "tower guard crossbow"
+    pushlist 'lootTypes' 31186
+    #recurve bow "recurve bow" 30995
+//Instruments
+    pushlist 'lootTypes' 0xeb2 //Harp
+    pushlist 'lootTypes' 0xe9c //Drums
+    pushlist 'lootTypes' 0xeb3 //Lute
+    pushlist 'lootTypes' 0xe9e //Tambourine
+    pushlist 'lootTypes' 0x2805 //BambooFlute
+    pushlist 'lootTypes' 20006 //gemshorn   
+    pushlist 'lootTypes' 20008 //hurdy-gurdy    
+    pushlist 'lootTypes' 20010 //psaltery       
+    pushlist 'lootTypes' 20012 //sackbut        
+    pushlist 'lootTypes' 20014 //shawm          
+    pushlist 'lootTypes' 20016 //Vielle     
+    
+//Other Helmets
+    pushlist 'lootTypes' 0x140f //NorseHelm
+//BoneArmor
+    pushlist 'lootTypes' 0x1451 //BoneHelm
+    pushlist 'lootTypes' 0x1457 //BoneLegs
+    pushlist 'lootTypes' 0x1453 //BoneArms
+    pushlist 'lootTypes' 0x1455 //BoneGloves
+//SlayerWands
+    pushlist 'lootTypes' 0xdf2 //SlayerWands
+    pushlist 'lootTypes' 0xdf3 //SlayerWands
+    pushlist 'lootTypes' 0xdf4 //SlayerWands
+    pushlist 'lootTypes' 0xdf5 //SlayerWands
+//OtherSTuff, that wasnt in list...
+    pushlist 'lootTypes' 0xdf5 //SlayerWands
+    pushlist 'lootTypes' 0xefa //SpellBook
+    pushlist 'lootTypes' 0x141a //platemailleggings
+    pushlist 'lootTypes' 0x1b7a //woodenshield
+    pushlist 'lootTypes' 0x13e2 //studdedchets
+    pushlist 'lootTypes' 0x1b79 //woodenkiteshield
+    pushlist 'lootTypes' 0x26bd //harpoon
+    pushlist 'lootTypes' 0x1c05 //Femaleplatechest
+    pushlist 'lootTypes' 0x1c0d //studdedbrasier
+    pushlist 'lootTypes' 0x1c01 //leathershorts
+    pushlist 'lootTypes' 0x1b75 //metalkiteshield
+    pushlist 'lootTypes' 0x1c07 //Femaleleather
+    pushlist 'lootTypes' 0x1416 //platemailchest
+    pushlist 'lootTypes' 0x13dd //studdedgloves
+    pushlist 'lootTypes' 0x1454 //Bonechest
+    pushlist 'lootTypes' 0x13d2 //leatherleggings
+    pushlist 'lootTypes' 0x1409 //closehelm
+    pushlist 'lootTypes' 0x13d4 //studdedarms
+    #trident "trident"
+    pushlist 'lootTypes' 31172
+
+    pushlist 'lootTypes' 0x175D //cloths
+    
+    //plant chemical
+    pushlist 'lootTypes' 29030 
+    
+    # Gold
+    pushlist 'lootTypes' 0xeed
+   
+endif
+
+# Set loot bag
+unsetvar 'T8lootBag'
+    overhead 'Set T8 Loot Bag:' 1150
+    setvar 'T8lootBag'
+    wait 250
+endif
+
+# Look for chest
+if findtype 'metal chest' ground any any 2 as metalChest
+    setvar! chest metalChest
+elseif findtype 'wooden chest' ground any any 2 as woodenChest
+    setvar! chest woodenChest
+endif
+getlabel chest chestLabel
+wait 100
+if 'dungeon chest' in chestLabel or 'treasure map chest' in chestLabel
+    overhead chestLabel 1150
+else
+    overhead 'No chest found!' 38
+    stop
+endif
+
+# Open chest
+dclick chest
+waitforgump 736038070 500
+if gumpexists 736038070
+    setvar! locked 1
+else
+    overhead 'Chest not locked!' 38
+    overhead 'Target chest to continue looting:' 38
+    setvar chest
+endif
+
+
+# Pick lock
+while locked = 1
+   
+    gumpresponse 4
+    wait 250
+    if not gumpexists 736038070 or insysmsg 'successfully pick the lock'
+        overhead 'Lock picked!' 1150
+        setvar! locked 0
+        break
+    elseif insysmsg 'attempt to pick the lock'
+        overhead 'Picking lock...' 1150
+        for 15
+            if insysmsg 'successfully pick the lock'
+                break
+            else
+                wait 250
+            endif
+        endfor
+    else
+        overhead 'Check Script!' 38
+        wait 250
+    endif
+endwhile
+wait 250
+
+# Loot
+overhead 'Looting...' 1150
+foreach t in 'lootTypes'
+    while findtype t chest as loot
+        
+        getlabel loot lootLabel
+        overhead lootLabel 1150
+        lift loot 999
+        drop lootBag -1 -1 -1
+        wait 500
+    endwhile
+endfor
+
+unsetvar chest
+overhead 'Script Complete!' 1150
