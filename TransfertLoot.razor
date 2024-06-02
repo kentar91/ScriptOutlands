@@ -1,0 +1,93 @@
+overhead '-Target Loot Container-' 0
+unsetvar 'faceSplitContainer'
+unsetvar 'faceSplitTmapTome'
+unsetvar 'faceSplitAspectTome'
+unsetvar 'faceSplitScrollTome'
+unsetvar 'faceSplitSkillOrb'
+unsetvar 'faceSplitMcd'
+removelist faceSplitMissingList
+createlist faceSplitMissingList
+clearsysmsg
+setvar 'faceSplitContainer'
+dclick 'faceSplitContainer'
+wait 1000
+if findtype '29104' 'faceSplitContainer' '2618' as tempVariableA
+setvar 'faceSplitAspectTome' tempVariableA
+endif
+if findtype '29104' 'faceSplitContainer' '2990' as tempVariableB
+setvar 'faceSplitTmapTome' tempVariableB
+endif
+if findtype '29104' 'faceSplitContainer' '2963' as tempVariableC
+setvar 'faceSplitScrollTome' tempVariableC
+endif
+if findtype '22336' 'faceSplitContainer' as tempVariableD
+setvar 'faceSplitSkillOrb' tempVariableD
+endif
+if findtype '17087' 'faceSplitContainer' as tempVariableE
+setvar 'faceSplitMcd' tempVariableE
+endif
+wait 1000
+// Starting aspect cores... //
+overhead 'Starting aspect cores...' 0
+dclick 'faceSplitAspectTome'
+wait 1000
+// CORE Command(1) //
+waitforgump 265325939
+gumpresponse 103 265325939
+waitforgump 265325939
+if insysmsg 'of that type are current'
+pushlist 'faceSplitMissingList' 'CORE Command' back
+endif
+// CORE Death(1) //
+waitforgump 265325939
+gumpresponse 104 265325939
+waitforgump 265325939
+if insysmsg 'of that type are current'
+pushlist 'faceSplitMissingList' 'CORE Death' back
+endif
+// CORE Fortune(1) //
+waitforgump 265325939
+gumpresponse 109 265325939
+waitforgump 265325939
+if insysmsg 'of that type are current'
+pushlist 'faceSplitMissingList' 'CORE Fortune' back
+endif
+// CORE Holy(2) //
+waitforgump 265325939
+gumpresponse 112 265325939
+waitforgump 265325939
+if insysmsg 'of that type are current'
+pushlist 'faceSplitMissingList' 'CORE Holy' back
+endif
+// CORE Holy(2) //
+waitforgump 265325939
+gumpresponse 112 265325939
+waitforgump 265325939
+if insysmsg 'of that type are current'
+pushlist 'faceSplitMissingList' 'CORE Holy' back
+endif
+// CORE Poison(2) //
+waitforgump 265325939
+gumpresponse 114 265325939
+waitforgump 265325939
+if insysmsg 'of that type are current'
+pushlist 'faceSplitMissingList' 'CORE Poison' back
+endif
+// CORE Poison(2) //
+waitforgump 265325939
+gumpresponse 114 265325939
+waitforgump 265325939
+if insysmsg 'of that type are current'
+pushlist 'faceSplitMissingList' 'CORE Poison' back
+endif
+// Aspect cores done. //
+overhead 'Aspect cores done.' 0
+wait 1000
+gumpclose 265325939
+if list 'faceSplitMissingList' '>' 0
+overhead 'Missing items:' 38
+endif
+foreach 'missingItem' in 'faceSplitMissingList'
+overhead missingItem 38
+endfor
+overhead 'All loot complete!' 0

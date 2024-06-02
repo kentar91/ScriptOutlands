@@ -1,0 +1,279 @@
+//
+// Face Distro Chest Organizer - V1.0
+//
+// This will organize a distro chest with boss loot in a consistent order with valuable items listed first.
+// All items will be unstacked prior to being sorted.
+// Items that shouldn't be distro'd will be moved to the lower right corner and should be removed.
+// Gold stacks will be moved to the lower right corner.
+//
+// Credits - Someone created the initial version of this but I don't know the source! Sorry!
+//
+clearignore
+
+unsetvar Distro
+setvar Unstack true
+setvar Sort true
+
+removelist 'SaveWorld'
+removelist 'DistroElements'
+removelist 'ItemList'
+removelist 'FinalItemList'
+removelist 'vertical'
+removelist 'horizontal'
+removelist 'LowerRightItems'
+removelist 'LowerLeftItems'
+removelist 'ResourceMapHues'
+
+createlist 'ItemList'
+createlist 'FinalItemList'
+createlist 'DistroElements'
+createlist 'LowerRightItems'
+createlist 'LowerLeftItems'
+createlist 'vertical'
+createlist 'horizontal'
+createlist 'ResourceMapHues'
+
+clearsysmsg 
+overhead '-->> TARGET DISTRO <<--' 91
+setvar Distro
+if not varexist Distro 
+    overhead '[SCRIPT STOPPED]' 38
+    stop
+endif
+
+
+dclick Distro
+
+// Elements to distro and sort.
+pushlist 'DistroElements' 'chain link'
+pushlist 'DistroElements' 'Book of Truth'
+pushlist 'DistroElements' 'void orb'
+pushlist 'DistroElements' 'aspect core'
+pushlist 'DistroElements' 'scroll of calling'
+pushlist 'DistroElements' 'phylactery'
+pushlist 'DistroElements' 'flask'
+pushlist 'DistroElements' 'chroma core'
+pushlist 'DistroElements' 'chroma distil'
+// Aspect extract
+pushlist 'DistroElements' 3836
+// Cloth
+pushlist 'DistroElements' 5981
+
+
+// Elements to exclude and dump in the right corner.
+// Research Materials
+pushlist 'LowerRightItems' 24434
+// Plant Chemicals
+pushlist 'LowerRightItems' 29030
+// Arcane Scrolls
+pushlist 'LowerRightItems' 3827
+// Phylactery
+pushlist 'LowerRightItems' 576
+// Seeds
+pushlist 'LowerRightItems' 22326
+// Runes
+pushlist 'LowerRightItems' 39918
+pushlist 'LowerRightItems' 39897
+pushlist 'LowerRightItems' 39891
+pushlist 'LowerRightItems' 8484
+pushlist 'LowerRightItems' 39889
+pushlist 'LowerRightItems' 39898
+pushlist 'LowerRightItems' 39916
+pushlist 'LowerRightItems' 39909
+pushlist 'LowerRightItems' 39912
+pushlist 'LowerRightItems' 39917
+pushlist 'LowerRightItems' 39892
+pushlist 'LowerRightItems' 39896
+pushlist 'LowerRightItems' 39911                                   
+
+// Elements to exclude and dump in the left corner.
+// Gold
+pushlist 'LowerLeftItems' 3821
+
+
+// Unstack everything in DistroElements
+overhead '[UNSTACKING DISTRO...]' 68
+foreach item in DistroElements
+    while findtype item Distro any 2 as pick
+        if varexist Unstack
+            lift pick 
+            drop Distro 0 0 0
+        else
+            ignore pick
+        endif
+    endwhile
+endfor
+
+overhead '[DISTRO UNSTACKED]' 68
+
+clearignore
+
+overhead '[MAKING GOLD STACKS...]'
+
+// Make gold stacks in 10k increments
+// Contributions by beejer
+while 1 < 2
+    // Split existing big ones
+    while findtype 'gold coin' 'Distro' -1 10001 -1 as 'bigstack'
+        lift 'bigstack' 10000
+        drop 'chest' 0 0 0
+        pause 600
+    endwhile
+
+    // Ignore completed stacks
+    while findtype 'gold coin' 'Distro' -1 10000 -1 as 'correctstack'
+        ignore 'correctstack'
+    endwhile
+    overhead 'Splitting Gold'
+    // Find and combine remainders
+    if findtype 'gold coin' 'Distro' -1 -1 -1 as 'combinestack'
+        ignore 'combinestack'
+        setvar 'targetstack' 'combinestack'
+        if findtype 'gold coin' 'Distro' -1 -1 -1
+            while findtype 'gold coin' 'Distro' -1 -1 -1 as 'smallstack'
+                lift 'smallstack' 60000
+                drop 'targetstack'
+                pause 600
+                //if more than 60k of remainders
+                if find 'smallstack' 'Distro' -1 -1 -1
+                    setvar 'targetstack' 'smallstack'
+                endif
+                ignore 'smallstack'
+            endwhile
+         else
+             break
+         endif
+     else
+         break
+     endif
+     clearignore
+
+    // Split existing big ones
+    while findtype 'gold coin' 'chest' -1 10001 -1 as 'bigstack'
+        lift 'bigstack' 10000
+        drop 'chest' 0 0 0
+        pause 600
+    endwhile
+
+    // Ignore completed stacks
+    while findtype 'gold coin' 'chest' -1 10000 -1 as 'correctstack'
+        @ignore 'correctstack'
+    endwhile
+endwhile
+// end gold unstack
+
+// Move everything non-distro to the corner
+overhead '[MOVING NON-DISTRO ITEMS...]' 68
+foreach item in LowerRightItems
+    while findtype item Distro as pick
+        lift pick 60000
+        drop Distro 1000 1000 1000
+        ignore pick
+    endwhile
+endfor
+
+
+pushlist 'ResourceMapHues' 2651
+pushlist 'ResourceMapHues' 2904
+pushlist 'ResourceMapHues' 2799
+pushlist 'ResourceMapHues' 2796
+
+
+// Move resource maps separately as we check hues
+foreach mapHue in ResourceMapHues
+    while findtype 'map' Distro mapHue as pick
+        lift pick 60000
+        drop Distro 1000 1000 1000
+        ignore pick
+    endwhile
+endfor
+
+// Move all gold stacks to the corner
+overhead '[MOVING GOLD...]' 68
+foreach item in LowerLeftItems
+    while findtype item Distro as pick
+        lift pick 60000
+        drop Distro 0 1000 1000
+        ignore pick
+    endwhile
+endfor
+
+clearignore
+
+// Populate our list of items to sort.
+foreach item in DistroElements
+    while findtype item Distro as pick
+        pushlist 'ItemList' pick 'back'
+        ignore pick
+    endwhile
+endfor
+
+// Populate maps separately because we care about hue (t-maps only)
+while findtype 'map' Distro 0 as pick
+    pushlist 'ItemList' pick 'front'
+    ignore pick
+endwhile
+
+// Create the grid of where to drop items.
+pushlist 'vertical' '104'
+pushlist 'vertical' '112'
+pushlist 'vertical' '120'
+pushlist 'vertical' '126'
+pushlist 'vertical' '132'
+pushlist 'vertical' '136'
+pushlist 'vertical' '140'
+pushlist 'vertical' '144'
+pushlist 'vertical' '147'
+pushlist 'horizontal' '17'
+pushlist 'horizontal' '26'
+pushlist 'horizontal' '34'
+pushlist 'horizontal' '42'
+pushlist 'horizontal' '51'
+pushlist 'horizontal' '59'
+pushlist 'horizontal' '67'
+pushlist 'horizontal' '76'
+pushlist 'horizontal' '84'
+pushlist 'horizontal' '92'
+pushlist 'horizontal' '101'
+pushlist 'horizontal' '109'
+pushlist 'horizontal' '117'
+pushlist 'horizontal' '126'
+
+pause 100
+
+// Start our sort by looping on our drop coordinate
+overhead '[SORTING...]' 68
+foreach y in vertical
+    foreach x in horizontal
+        if list 'ItemList' > 0
+            if insysmsg 'The world will save in 15 seconds' or listexists 'SaveWorld'
+                if not listexists 'SaveWorld'
+                    createlist 'SaveWorld'
+                    createtimer 'WorldSave'
+                    settimer 'WorldSave' 0
+                endif
+                if timer 'WorldSave' > 12000 or insysmsg 'The world is saving'
+                    overhead '[PAUSE - World Save inc.]' 68
+                    while not insysmsg 'World save complete'
+                        wait 100
+                    endwhile
+                    removelist 'SaveWorld'
+                    removetimer 'WorldSave'
+                    overhead '[RESUMING]' 68
+                endif
+            endif            
+            if poplist ItemList front as pick
+                lift pick 
+                drop Distro x y 0
+                while queued
+                    wait 40
+                endwhile
+                wait 75
+            endif
+        else
+            // Nothing left to organize, stop the script.
+            overhead '[DISTRO SORTED]' 68
+            stop
+        endif
+    endfor
+endfor

@@ -1,0 +1,438 @@
+clearignore 
+dclick 0x410B9176
+pause 600
+if findtype 48261 backpack as FOCI
+    ignore FOCI
+    overhead 'IGNORED FOCI'
+endif
+    
+if not varexist senatorchest
+    setvar senatorchest 0x4058C1F3
+endif
+dclick senatorchest
+pause 600
+overhead 'ADDING RESOURCE MAPS TO BOOKS'
+pause 200
+overhead 'items recycling'
+menu 0x40F42FC1 1
+pause 100
+unsetvar 'DISTROCHEST'
+pause 200
+overhead 'TARGET DISTRO CHEST'
+setvar 'DISTROCHEST'
+pause 200
+setvar Distro DISTROCHEST
+setvar 'NONDISTROCONTAINER' 0x40C63852
+pause 200
+dclick DISTROCHEST
+pause 600
+dclick NONDISTROCONTAINER
+pause 600
+setvar paragonchest 0x442F04C4
+dclick paragonchest
+while findtype 42517|17083|24434| 'paragonchest' as bossitems
+    overhead 'MOVING PARAGON CHEST TOKENS/RMS TO BOSS CHEST'
+getlabel 'bossitems' 'label'
+overhead 'label'
+overhead 'BOSS CHEST ITEMS'  
+lift bossitems 10000
+pause 50
+drop 0x410B9176 -1 -1 0
+pause 550
+ endwhile 
+while findtype 576|29030|3827|22326|4225|3877|3878|3862|3865|3885|3856|3873|3861| 'paragonchest' as ITEMSS
+    overhead 'MOVING PARAGON CHEST ITEMS TO SENATOR CHEST'
+getlabel 'ITEMSS' 'label'
+overhead 'label'
+pause 500
+overhead 'NON DISTRO ITEMS'  
+lift ITEMSS 10000
+pause 200
+drop NONDISTROCONTAINER -1 -1 0
+pause 600
+ 
+endwhile 
+while findtype 42517|17083|24434| 'DISTROCHEST' as bossitems
+    overhead 'MOVING PARAGON CHEST TOKENS/RMS TO BOSS CHEST'
+getlabel 'bossitems' 'label'
+overhead 'label'
+overhead 'BOSS CHEST ITEMS'  
+lift bossitems 10000
+pause 50
+drop 0x410B9176 -1 -1 0
+pause 550
+ endwhile 
+ while findtype 576|29030|3827|22326|4225|3877|3878|3862|3865|3885|3856|3873|3861| 'DISTROCHEST' as ITEMSS
+    overhead 'MOVING PARAGON CHEST ITEMS TO SENATOR CHEST'
+getlabel 'ITEMSS' 'label'
+overhead 'label'
+pause 500
+overhead 'NON DISTRO ITEMS'  
+lift ITEMSS 10000
+pause 200
+drop NONDISTROCONTAINER -1 -1 0
+pause 600
+ 
+endwhile 
+while findtype 42517|17083|24434| 'backpack' as bossitems
+    overhead 'MOVING BACKPACK TOKENS/RMS TO BOSS CHEST'
+getlabel 'bossitems' 'label'
+overhead 'label'
+overhead 'BOSS CHEST ITEMS'  
+lift bossitems 10000
+pause 50
+drop 0x410B9176 -1 -1 0
+pause 550
+ endwhile 
+ while findtype 576|29030|3827|22326|4225|3877|3878|3862|3865|3885|3856|3873|3861| 'backpack' as ITEMSS
+     overhead 'MOVING BACKPACK ITEMS TO SENATOR CHEST'
+getlabel 'ITEMSS' 'label'
+overhead 'label'
+pause 500
+overhead 'NON DISTRO ITEMS'  
+lift ITEMSS 10000
+pause 200
+drop NONDISTROCONTAINER -1 -1 0
+pause 600
+ 
+endwhile 
+while findtype 576|3827|8826|22336|3985|5356|3836|22326|17087|3838|29036|3842|3843|5981| backpack as ITEM
+getlabel 'ITEM' 'label'
+overhead 'label'
+lift ITEM 10000
+pause 50
+drop 'DISTROCHEST' 
+pause 550
+ignore ITEM
+clearignore
+if findtype 48261 backpack as FOCI
+    ignore FOCI
+    overhead 'IGNORED FOCI'
+endif
+endwhile
+while findtype 3821 backpack as GOLD
+    getlabel GOLD 'label'
+overhead 'label'
+lift GOLD 60000
+pause 50
+drop 'DISTROCHEST' -1 -1 0
+pause 550
+ignore GOLD
+clearignore
+if findtype 48261 backpack as FOCI
+    ignore FOCI
+    overhead 'IGNORED FOCI'
+endif
+endwhile
+while findtype 3821 'DISTROCHEST' as GOLDDISTRO
+    overhead 'GOLD ORGANIZING 10K STACKS'
+lift GOLDDISTRO 10000
+pause 200
+drop DISTROCHEST 18 146 0
+pause 600
+getlabel 'GOLDDISTRO' 'label'
+overhead 'label'
+pause 200
+ignore GOLDDISTRO
+endwhile    
+while findtype  5356 'DISTROCHEST' '0' '-1' as MAP
+    overhead 'TREASURE MAP IGNORED'
+getlabel 'MAP' 'label'
+overhead 'label'
+pause 500
+ignore MAP
+endwhile
+dclick 0x40C63852
+pause 600
+//
+// Face Distro Chest Organizer - V1.0
+//
+// This will organize a distro chest with boss loot in a consistent order with valuable items listed first.
+// All items will be unstacked prior to being sorted.
+// Items that shouldnt be distrod will be moved to the lower right corner and should be removed.
+// Gold stacks will be moved to the lower right corner.
+//
+// Credits - Someone created the initial version of this but I dont know the source! Sorry!
+//
+clearignore
+if findtype 48261 backpack as FOCI
+    ignore FOCI
+    overhead 'IGNORED FOCI'
+endif
+
+setvar Unstack true
+setvar Sort true
+
+removelist 'SaveWorld'
+removelist 'DistroElements'
+removelist 'ItemList'
+removelist 'FinalItemList'
+removelist 'vertical'
+removelist 'horizontal'
+removelist 'LowerRightItems'
+removelist 'LowerLeftItems'
+removelist 'ResourceMapHues'
+
+createlist 'ItemList'
+createlist 'FinalItemList'
+createlist 'DistroElements'
+createlist 'LowerRightItems'
+createlist 'LowerLeftItems'
+createlist 'vertical'
+createlist 'horizontal'
+createlist 'ResourceMapHues'
+
+clearsysmsg 
+overhead '-->> TARGET DISTRO <<--' 91
+if not varexist Distro 
+    overhead '[SCRIPT STOPPED]' 38
+    stop
+endif
+
+
+dclick Distro
+
+// Elements to distro and sort.  
+pushlist 'DistroElements' 'chain link'
+pushlist 'DistroElements' 'Book of Truth'
+pushlist 'DistroElements' 'void orb'
+pushlist 'DistroElements' 'aspect core'
+pushlist 'DistroElements' 'scroll of calling'
+pushlist 'DistroElements' 'map'
+// Aspect 
+pushlist 'DistroElements' 3836
+// Cloth
+pushlist 'DistroElements' 5981
+
+
+// Elements to exclude and dump in the right corner.
+// Research Materials
+pushlist 'LowerRightItems' 24434
+// Plant Chemicals
+pushlist 'LowerRightItems' 29030
+// Arcane Scrolls
+pushlist 'LowerRightItems' 3827
+// Phylactery
+pushlist 'LowerRightItems' 576
+// Seeds
+pushlist 'LowerRightItems' 22326
+// Runes
+pushlist 'LowerRightItems' 39918
+pushlist 'LowerRightItems' 39897
+pushlist 'LowerRightItems' 39891
+pushlist 'LowerRightItems' 8484
+pushlist 'LowerRightItems' 39889
+pushlist 'LowerRightItems' 39898
+pushlist 'LowerRightItems' 39916
+pushlist 'LowerRightItems' 39909
+pushlist 'LowerRightItems' 39912
+pushlist 'LowerRightItems' 39917
+pushlist 'LowerRightItems' 39892
+pushlist 'LowerRightItems' 39896
+pushlist 'LowerRightItems' 39911                                   
+
+// Elements to exclude and dump in the left corner.
+// Gold
+pushlist 'LowerLeftItems' 3821
+
+
+// Unstack everything in DistroElements
+overhead '[UNSTACKING DISTRO...]' 68
+foreach item in DistroElements
+    while findtype item Distro any 2 as pick
+        if varexist Unstack
+            lift pick 
+            drop Distro 0 0 0
+        else
+            ignore pick
+        endif
+    endwhile
+endfor
+
+overhead '[DISTRO UNSTACKED]' 68
+
+clearignore
+if findtype 48261 backpack as FOCI
+    ignore FOCI
+    overhead 'IGNORED FOCI'
+endif
+
+overhead '[MAKING GOLD STACKS...]'
+
+// Make gold stacks in 10k increments
+// Contributions by beejer
+while 1 < 2
+    // Split existing big ones
+    while findtype 'gold coin' 'Distro' -1 10001 -1 as 'bigstack'
+        lift 'bigstack' 10000
+        drop 'chest' 0 0 0
+        pause 600
+    endwhile
+
+    // Ignore completed stacks
+    while findtype 'gold coin' 'Distro' -1 10000 -1 as 'correctstack'
+        ignore 'correctstack'
+    endwhile
+    overhead 'Splitting Gold'
+    // Find and combine remainders
+    if findtype 'gold coin' 'Distro' -1 -1 -1 as 'combinestack'
+        ignore 'combinestack'
+        setvar 'targetstack' 'combinestack'
+        if findtype 'gold coin' 'Distro' -1 -1 -1
+            while findtype 'gold coin' 'Distro' -1 -1 -1 as 'smallstack'
+                lift 'smallstack' 60000
+                drop 'targetstack'
+                pause 600
+                //if more than 60k of remainders
+                if find 'smallstack' 'Distro' -1 -1 -1
+                    setvar 'targetstack' 'smallstack'
+                endif
+                ignore 'smallstack'
+            endwhile
+         else
+             break
+         endif
+     else
+         break
+     endif
+     clearignore
+     if findtype 48261 backpack as FOCI
+    ignore FOCI
+    overhead 'IGNORED FOCI'
+endif
+
+    // Split existing big ones
+    while findtype 'gold coin' 'chest' -1 10001 -1 as 'bigstack'
+        lift 'bigstack' 10000
+    drop 'chest' 1000 1000 1000
+        pause 600
+    endwhile
+
+    // Ignore completed stacks
+    while findtype 'gold coin' 'chest' -1 10000 -1 as 'correctstack'
+        lift 'correctstack' 10000
+        drop 'chest' 1000 1000 1000
+        @ignore 'correctstack'
+    endwhile
+endwhile
+// end gold unstack
+
+// Move everything non-distro to the corner
+overhead '[MOVING NON-DISTRO ITEMS...]' 68
+foreach item in LowerRightItems
+    while findtype item Distro as pick
+        lift pick 60000
+        drop Distro 1000 1000 1000
+        ignore pick
+    endwhile
+endfor
+
+
+pushlist 'ResourceMapHues' 2651
+pushlist 'ResourceMapHues' 2904
+pushlist 'ResourceMapHues' 2799
+pushlist 'ResourceMapHues' 2796
+
+
+// Move resource maps separately as we check hues
+foreach mapHue in ResourceMapHues
+    while findtype 'map' Distro mapHue as pick
+        lift pick 60000
+        drop Distro 1000 1000 1000
+        ignore pick
+    endwhile
+endfor
+
+// Move all gold stacks to the corner
+overhead '[MOVING GOLD...]' 68
+foreach item in LowerLeftItems
+    while findtype item Distro as pick
+        lift pick 60000
+        drop Distro 1000 1000 1000
+        ignore pick
+    endwhile
+endfor
+
+clearignore
+if findtype 48261 backpack as FOCI
+    ignore FOCI
+    overhead 'IGNORED FOCI'
+endif
+
+// Populate our list of items to sort.
+foreach item in DistroElements
+    while findtype item Distro as pick
+        pushlist 'ItemList' pick 'back'
+        ignore pick
+    endwhile
+endfor
+
+// Populate maps separately because we care about hue (t-maps only)
+while findtype 'map' Distro 0 as pick
+    pushlist 'ItemList' pick 'front'
+    ignore pick
+endwhile
+
+// Create the grid of where to drop items.
+pushlist 'vertical' '104'
+pushlist 'vertical' '112'
+pushlist 'vertical' '120'
+pushlist 'vertical' '126'
+pushlist 'vertical' '132'
+pushlist 'vertical' '136'
+pushlist 'vertical' '140'
+pushlist 'vertical' '144'
+pushlist 'vertical' '147'
+pushlist 'horizontal' '17'
+pushlist 'horizontal' '26'
+pushlist 'horizontal' '34'
+pushlist 'horizontal' '42'
+pushlist 'horizontal' '51'
+pushlist 'horizontal' '59'
+pushlist 'horizontal' '67'
+pushlist 'horizontal' '76'
+pushlist 'horizontal' '84'
+pushlist 'horizontal' '92'
+pushlist 'horizontal' '101'
+pushlist 'horizontal' '109'
+pushlist 'horizontal' '117'
+pushlist 'horizontal' '126'
+
+pause 100
+
+// Start our sort by looping on our drop coordinate
+overhead '[SORTING...]' 68
+foreach y in vertical
+    foreach x in horizontal
+        if list 'ItemList' > 0
+            if insysmsg 'The world will save in 15 seconds' or listexists 'SaveWorld'
+                if not listexists 'SaveWorld'
+                    createlist 'SaveWorld'
+                    createtimer 'WorldSave'
+                    settimer 'WorldSave' 0
+                endif
+                if timer 'WorldSave' > 12000 or insysmsg 'The world is saving'
+                    overhead '[PAUSE - World Save inc.]' 68
+                    while not insysmsg 'World save complete'
+                        wait 100
+                    endwhile
+                    removelist 'SaveWorld'
+                    removetimer 'WorldSave'
+                    overhead '[RESUMING]' 68
+                endif
+            endif            
+            if poplist ItemList front as pick
+                lift pick 
+                drop Distro x y 0
+                while queued
+                    wait 40
+                endwhile
+                wait 75
+            endif
+        else
+            // Nothing left to organize, stop the script.
+            overhead '[DISTRO SORTED]' 68
+            stop
+        endif
+    endfor
+endfor

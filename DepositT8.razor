@@ -1,0 +1,153 @@
+//version 2.0 05 apr 2024 by kentar
+//script to put inside the T8 Senator chest all the shit :D
+//05 apr 2024 - added new map books, chroma aspect type
+//id reference https://outlands.uorazorscripts.com/script/23d5660a-f8fd-491d-97b3-1afa3d73c84d
+overhead 'Start T8 Deposit'
+clearignore 
+dclick 0x401EC007
+pause 600
+if findtype 48261 backpack as FOCI
+    ignore FOCI
+    overhead 'IGNORED FOCI'
+endif
+    
+if not varexist T8senatorchest
+    setvar T8senatorchest 0x401EC007
+endif
+dclick T8senatorchest
+pause 600
+overhead 'moving items in the recycler'
+menu 0x40F42FC1 1
+pause 100
+//books
+overhead 'moving aspect items in the book' 33
+menu 0x41C63A11 0
+wait 500
+overhead 'moving skill mastery scrolls in the book' 33
+menu 0x41E726F8 0
+wait 500
+overhead 'moving rare cloth in the book' 33
+menu 0x40A249EE 0
+wait 500
+overhead 'moving dyes in the book' 33
+menu 0x40A24250 0
+wait 500
+//end books
+//maps
+overhead 'moving treasure map in the book' 33
+menu 0x49BF042A 0
+wait 500
+overhead 'moving skinning map in the book' 33
+menu 0x40190EDD 0
+wait 500
+overhead 'moving fishing map in the book' 33
+menu 0x40C65460 0
+wait 500
+overhead 'moving lumber map in the book' 33
+menu 0x400A0B6A 0
+wait 500
+overhead 'moving ore map in the book' 33
+menu 0x4076555C 0
+wait 500
+//end maps
+
+
+overhead 'move link in the book' 33
+menu 0x49E3ADC3 0
+wait 500
+
+
+//section for deposit MCD, skill orb and RM in the senator chest
+while findtype 17087 backpack as special
+    overhead 'insert MCD into T8 Senator Chest'
+    lift special 999
+    pause 200
+    drop T8senatorchest 18 146 0
+endwhile
+    pause 600
+while findtype 22336 backpack as special
+    overhead 'insert Skill Orb into T8 Senator Chest'
+    lift special 999
+    pause 200
+    drop T8senatorchest 28 146 0
+endwhile
+    pause 600
+while findtype 24434 backpack as special
+    overhead 'insert RM into T8 Senator Chest'
+    lift special 999
+    pause 200
+    drop T8senatorchest 38 146 0
+endwhile
+    pause 600
+//end section
+    
+pause 200
+setvar STUFFCHEST 0x54B1A6BD
+
+
+while findtype 3821 backpack as GOLD
+overhead 'insert gold in STUFFCHEST'
+    getlabel GOLD 'label'
+overhead 'label'
+lift GOLD 60000
+pause 50
+drop 'STUFFCHEST' -1 -1 0
+pause 550
+ignore GOLD
+clearignore
+if findtype 48261 backpack as FOCI
+    ignore FOCI
+    overhead 'IGNORED FOCI'
+endif
+endwhile
+
+while findtype 5356 backpack as othermap
+overhead 'insert other Maps in the chest'
+lift othermap 999
+pause 200
+drop STUFFCHEST -1 -1 0
+endwhile
+pause 600
+
+//3827 arcane scroll
+while findtype 3827|4225|12686|2744|43166|48405|27611 backpack as nicestuff
+overhead 'insert other nice stuffs in the chest'
+lift nicestuff 999
+pause 200
+drop STUFFCHEST -1 -1 0
+endwhile
+pause 600
+
+while findtype 2323|3703|3707|3715|4090|4154|4550|4551|5344|5453|6187|6193|6327|6328|6330|6333|6334|6335|6337|6338|6341|11942|19403|20498|20499|20500|20501|20502|20503|22326|25570|28719|28741|28987|29030|29217|29343|29345|29372|29868|51078|51098|51188|53611|54062|55139 backpack as seed
+    overhead 'insert seeds in the chest'
+lift seed 999
+pause 200
+drop STUFFCHEST -1 -1 0
+endwhile
+pause 600
+
+
+while findtype 4025|4026 backpack as chroma
+    overhead 'insert chroma in the chest'
+lift chroma 999
+pause 200
+drop STUFFCHEST -1 -1 0
+endwhile
+pause 600
+
+while findtype 3821 'STUFFCHEST' as GOLDDISTRO
+    overhead 'GOLD ORGANIZING 60K STACKS'
+lift GOLDDISTRO 60000
+pause 200
+drop STUFFCHEST 1000 1000 0
+pause 600
+getlabel 'GOLDDISTRO' 'label'
+overhead 'label'
+pause 200
+ignore GOLDDISTRO
+endwhile    
+
+pause 100
+
+
+overhead 'ALL DONE! Nice Job' 44

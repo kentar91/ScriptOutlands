@@ -1,0 +1,50 @@
+//
+// Item Recycler Auto-Recycle - v1.0
+//
+// Locates a nearby item recycler, pulls a container id wand out,
+// identifies the recycler container, recycles the items inside,
+// then puts the container id wand back.
+//
+setvar! errorColor '38'
+setvar! objectDelay 1000
+setvar! gumpBufferTime 250
+
+if findtype 'ornate elven chest' 'ground' 'any' 0 2 as recycler
+    overhead 'Item Recycler Found!'
+    dclick recycler
+    wait objectDelay
+    if findtype 20495 recycler 'any' 1 as idWand
+        // Grab the ID wand
+        overhead 'ID Wand Found!'
+        lift idWand
+        wait objectDelay
+        drop 'self'
+        wait objectDelay
+
+        // Use the ID wand on the chest
+        dclick idWand
+        waitfortarget 
+        target recycler
+        overhead 'Container Identified'
+
+        // Run the recycler
+        wait gumpBufferTime
+        gumpresponse 6 4045111101
+        waitforgump 4045111101
+        wait gumpBufferTime
+        gumpresponse 6 4045111101
+        waitforgump 4045111101
+        wait gumpBufferTime
+        gumpclose 4045111101
+
+        // Put the wand back
+        lift idWand
+        wait objectDelay
+        drop recycler 0 0 0
+        overhead 'Recycle complete!'
+    else
+        overhead 'No ID Wand Found.' 'errorColor'
+    endif
+else
+    overhead 'No Item Recycler Found.' 'errorColor'
+endif

@@ -1,0 +1,22 @@
+#searching bossresults by Bruxx and Kentar
+#02/06/2024
+#version1
+say '[bossresults'
+while not dead 
+overhead "Searching boss results"
+waitforgump 1892293155
+gumpresponse 2
+waitforgump 1892293155
+wait 200
+#here insert name of boss
+if ingump 'Pit' any
+    #here insert the guild you found or name of the player
+    if ingump '-_-' any
+        #here insert date
+        if ingump '6/1'
+            stop
+        overhead "Found!!" 99
+        endif
+    endif
+endif    
+endwhile
