@@ -1,0 +1,50 @@
+#MoveGoldFromChest v 1.0
+#Kentar 05/06/2024
+#This code takes the money from a chest and deposits it into the bank deposit safe
+
+clearsysmsg
+unsetvar chest
+setvar! locked 0
+
+removelist 'lootTypes'
+
+if not listexists 'lootTypes'
+    overhead 'Compiling list...' 1150
+    createlist 'lootTypes'
+   
+    
+    # Gold
+    pushlist 'lootTypes' 0xeed
+   
+endif
+
+
+unsetvar 'destinationCHEST'
+overhead "set the destination CHEST" 77
+setvar 'destinationCHEST' 
+dclick 'destinationCHEST'
+
+# Look for banksafe
+if findtype 'bank deposit safe' ground any any 2 as banksafe
+    setvar! banksafe banksafe
+endif
+getlabel banksafe chestLabel
+wait 100
+endif
+
+# Loot
+overhead 'Looting...' 1150
+foreach t in 'lootTypes'
+    while findtype t destinationCHEST as loot
+        
+        getlabel loot lootLabel
+        overhead lootLabel 1150
+        lift loot 60000
+        drop banksafe -1 -1 -1
+        wait 500
+        
+       
+    endwhile
+endfor
+
+unsetvar chest
