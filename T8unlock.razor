@@ -1,4 +1,6 @@
 #script for TMAP by Kentar 01042024
+#this script opens the chests and places everything inside a backpack of your choice
+#05 giu 2024 -  added new itemid of WILDLANDS
 
 clearsysmsg
 unsetvar chest
@@ -478,9 +480,14 @@ if not listexists 'lootTypes'
     
     //plant chemical
     pushlist 'lootTypes' 29030 
-    
+	
+    # Survival Gear
+	pushlist 'lootTypes' 37181
+	
     # Gold
     pushlist 'lootTypes' 0xeed
+	
+	
    
 endif
 

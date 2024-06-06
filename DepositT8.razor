@@ -1,6 +1,7 @@
-//version 2.0 05 apr 2024 by kentar
+//version 3.0 05 giu 2024 by kentar
 //script to put inside the T8 Senator chest all the shit :D
 //05 apr 2024 - added new map books, chroma aspect type
+//05 giu 2024 - added survival gear and update new items of WILDLANDS
 //id reference https://outlands.uorazorscripts.com/script/23d5660a-f8fd-491d-97b3-1afa3d73c84d
 overhead 'Start T8 Deposit'
 clearignore 
@@ -109,8 +110,8 @@ drop STUFFCHEST -1 -1 0
 endwhile
 pause 600
 
-//3827 arcane scroll
-while findtype 3827|4225|12686|2744|43166|48405|27611 backpack as nicestuff
+//3827 arcane scroll  - 37181 Survival Gear
+while findtype 3827|4225|12686|2744|43166|48405|27611|37181 backpack as nicestuff
 overhead 'insert other nice stuffs in the chest'
 lift nicestuff 999
 pause 200
@@ -135,17 +136,6 @@ drop STUFFCHEST -1 -1 0
 endwhile
 pause 600
 
-while findtype 3821 'STUFFCHEST' as GOLDDISTRO
-    overhead 'GOLD ORGANIZING 60K STACKS'
-lift GOLDDISTRO 60000
-pause 200
-drop STUFFCHEST 1000 1000 0
-pause 600
-getlabel 'GOLDDISTRO' 'label'
-overhead 'label'
-pause 200
-ignore GOLDDISTRO
-endwhile    
 
 pause 100
 

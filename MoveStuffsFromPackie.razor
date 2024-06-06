@@ -1,5 +1,5 @@
 #MoveStuffsFromPackie v 1.0
-#Kentar 02/06/2024
+#Kentar 02 giu 2024
 #This script takes all the things contained in the nearest pack horse and moves them into a container of your choice.
 #If the container is your backpack, check the quantity of objects and weight. If these data are excessive the macro stops!
 #It is recommended to use this macro with discretion, as the destination pack horse or container may be too full.
@@ -484,7 +484,10 @@ if not listexists 'lootTypes'
     
     //plant chemical
     pushlist 'lootTypes' 29030 
-    
+	
+    # Survival Gear
+	pushlist 'lootTypes' 37181
+	
     # Gold
     pushlist 'lootTypes' 0xeed
    
