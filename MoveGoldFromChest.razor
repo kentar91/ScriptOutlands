@@ -1,5 +1,5 @@
 #MoveGoldFromChest v 1.0
-#Kentar 05 giu 2024
+#Kentar 05/06/2024
 #This code takes the money from a chest and deposits it into the bank deposit safe
 
 clearsysmsg
@@ -12,10 +12,12 @@ if not listexists 'lootTypes'
     overhead 'Compiling list...' 1150
     createlist 'lootTypes'
    
-    
     # Gold
     pushlist 'lootTypes' 0xeed
    
+    # Bank Check
+    pushlist 'lootTypes' 5360
+    
 endif
 
 
