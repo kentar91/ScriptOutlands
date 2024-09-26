@@ -11,15 +11,33 @@ if findtype 48261 backpack as FOCI
     ignore FOCI
     overhead 'IGNORED FOCI'
 endif
-    
+    //set t8 chest
 if not varexist T8senatorchest
     setvar T8senatorchest 0x401EC007
 endif
 dclick T8senatorchest
+//set T8 distro chest
+if not varexist T8DISTROsenatorchest
+    setvar T8DISTROsenatorchest 0x41292825
+endif
+
+dclick T8senatorchest
+
 pause 600
 overhead 'moving items in the recycler'
 menu 0x40F42FC1 1
 pause 100
+//recycler
+dclick 0x40F42FC1
+waitforgump 4045111101
+gumpresponse 7
+waitforgump 4045111101
+gumpresponse 6
+waitforgump 4045111101
+gumpresponse 6
+waitforgump 4045111101
+
+dclick T8DISTROsenatorchest
 //books
 overhead 'moving aspect items in the book' 33
 menu 0x41C63A11 0
@@ -52,38 +70,31 @@ menu 0x4076555C 0
 wait 500
 //end maps
 
+//carpet
+while findtype 2744|2750|2760|2771|2778|2799|4248|19717|22244|43166|43179|48405|48407 backpack as nicestuff
+overhead 'insert other nice stuffs in the chest'
+lift nicestuff 999
+pause 200
+drop T8DISTROsenatorchest -1 -1 0
+endwhile
+pause 600
+//other 11858 spellhuedeed - 51094 leaf - lantern 2594
+while findtype 11858|51094|2594 backpack as nicestuff
+overhead 'insert other nice stuffs in the chest'
+lift nicestuff 999
+pause 200
+drop T8DISTROsenatorchest -1 -1 0
+endwhile
+pause 600
 
 overhead 'move link in the book' 33
 menu 0x49E3ADC3 0
 wait 500
 
 
-//section for deposit MCD, skill orb and RM in the senator chest
-while findtype 17087 backpack as special
-    overhead 'insert MCD into T8 Senator Chest'
-    lift special 999
-    pause 200
-    drop T8senatorchest 18 146 0
-endwhile
-    pause 600
-while findtype 22336 backpack as special
-    overhead 'insert Skill Orb into T8 Senator Chest'
-    lift special 999
-    pause 200
-    drop T8senatorchest 28 146 0
-endwhile
-    pause 600
-while findtype 24434 backpack as special
-    overhead 'insert RM into T8 Senator Chest'
-    lift special 999
-    pause 200
-    drop T8senatorchest 38 146 0
-endwhile
-    pause 600
-//end section
-    
-pause 200
+
 setvar STUFFCHEST 0x54B1A6BD
+dclick STUFFCHEST
 
 
 while findtype 3821 backpack as GOLD
@@ -119,6 +130,7 @@ drop STUFFCHEST -1 -1 0
 endwhile
 pause 600
 
+
 while findtype 2323|3703|3707|3715|4090|4154|4550|4551|5344|5453|6187|6193|6327|6328|6330|6333|6334|6335|6337|6338|6341|11942|19403|20498|20499|20500|20501|20502|20503|22326|25570|28719|28741|28987|29030|29217|29343|29345|29372|29868|51078|51098|51188|53611|54062|55139 backpack as seed
     overhead 'insert seeds in the chest'
 lift seed 999
@@ -136,8 +148,31 @@ drop STUFFCHEST -1 -1 0
 endwhile
 pause 600
 
-
-pause 100
+//section for deposit MCD, skill orb and RM in the senator chest
+while findtype 17087 backpack as special
+    overhead 'insert MCD into T8 Senator Chest'
+    lift special 999
+    pause 200
+    drop STUFFCHEST -1 -1 0
+endwhile
+    pause 600
+while findtype 22336 backpack as special
+    overhead 'insert Skill Orb into T8 Senator Chest'
+    lift special 999
+    pause 200
+    drop STUFFCHEST -1 -1 0
+endwhile
+    pause 600
+while findtype 24434 backpack as special
+    overhead 'insert RM into T8 Senator Chest'
+    lift special 999
+    pause 200
+    drop STUFFCHEST -1 -1 0
+endwhile
+    pause 600
+//end section
+    
+pause 200
 
 
 overhead 'ALL DONE! Nice Job' 44
