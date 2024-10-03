@@ -2,25 +2,15 @@
 //script to put inside the T8 Senator chest all the shit :D
 //05 apr 2024 - added new map books, chroma aspect type
 //05 giu 2024 - added survival gear and update new items of WILDLANDS
+//28 set 2024 - fixed buuugggs
 //id reference https://outlands.uorazorscripts.com/script/23d5660a-f8fd-491d-97b3-1afa3d73c84d
+
 overhead 'Start T8 Deposit'
 clearignore 
-dclick 0x401EC007
-pause 600
-if findtype 48261 backpack as FOCI
-    ignore FOCI
-    overhead 'IGNORED FOCI'
-endif
-    //set t8 chest
+//set t8 chest
 if not varexist T8senatorchest
     setvar T8senatorchest 0x401EC007
 endif
-dclick T8senatorchest
-//set T8 distro chest
-if not varexist T8DISTROsenatorchest
-    setvar T8DISTROsenatorchest 0x41292825
-endif
-
 dclick T8senatorchest
 
 pause 600
@@ -36,8 +26,8 @@ gumpresponse 6
 waitforgump 4045111101
 gumpresponse 6
 waitforgump 4045111101
+//end recycler
 
-dclick T8DISTROsenatorchest
 //books
 overhead 'moving aspect items in the book' 33
 menu 0x41C63A11 0
@@ -70,12 +60,20 @@ menu 0x4076555C 0
 wait 500
 //end maps
 
+//links
+overhead 'move link in the book' 33
+menu 0x49E3ADC3 0
+wait 500
+
+setvar STUFFCHEST 0x54B1A6BD
+dclick STUFFCHEST
+
 //carpet
 while findtype 2744|2750|2760|2771|2778|2799|4248|19717|22244|43166|43179|48405|48407 backpack as nicestuff
 overhead 'insert other nice stuffs in the chest'
 lift nicestuff 999
 pause 200
-drop T8DISTROsenatorchest -1 -1 0
+drop STUFFCHEST -1 -1 0
 endwhile
 pause 600
 //other 11858 spellhuedeed - 51094 leaf - lantern 2594
@@ -83,19 +81,9 @@ while findtype 11858|51094|2594 backpack as nicestuff
 overhead 'insert other nice stuffs in the chest'
 lift nicestuff 999
 pause 200
-drop T8DISTROsenatorchest -1 -1 0
+drop STUFFCHEST -1 -1 0
 endwhile
 pause 600
-
-overhead 'move link in the book' 33
-menu 0x49E3ADC3 0
-wait 500
-
-
-
-setvar STUFFCHEST 0x54B1A6BD
-dclick STUFFCHEST
-
 
 while findtype 3821 backpack as GOLD
 overhead 'insert gold in STUFFCHEST'
@@ -107,10 +95,6 @@ drop 'STUFFCHEST' -1 -1 0
 pause 550
 ignore GOLD
 clearignore
-if findtype 48261 backpack as FOCI
-    ignore FOCI
-    overhead 'IGNORED FOCI'
-endif
 endwhile
 
 while findtype 5356 backpack as othermap
@@ -130,7 +114,7 @@ drop STUFFCHEST -1 -1 0
 endwhile
 pause 600
 
-
+//seeds
 while findtype 2323|3703|3707|3715|4090|4154|4550|4551|5344|5453|6187|6193|6327|6328|6330|6333|6334|6335|6337|6338|6341|11942|19403|20498|20499|20500|20501|20502|20503|22326|25570|28719|28741|28987|29030|29217|29343|29345|29372|29868|51078|51098|51188|53611|54062|55139 backpack as seed
     overhead 'insert seeds in the chest'
 lift seed 999
@@ -139,7 +123,16 @@ drop STUFFCHEST -1 -1 0
 endwhile
 pause 600
 
+//jewels
+while findtype 3856|3859|3861|3862|3865|3873|3877|3878|3885 backpack as chroma
+    overhead 'insert jewels in the chest'
+lift jewels 999
+pause 200
+drop STUFFCHEST -1 -1 0
+endwhile
+pause 600
 
+//chroma
 while findtype 4025|4026 backpack as chroma
     overhead 'insert chroma in the chest'
 lift chroma 999
@@ -174,5 +167,14 @@ endwhile
     
 pause 200
 
+//Ground runes/Floor runes
+if findtype 39889|39891|39892|39896|39897|39898|39905|39909|39911|39912|39916|39917|39918 backpack as special
+    overhead 'insert Special Rune into Senator Chest'
+    dclick 0x4058C1F3
+	pause 200
+	menu 0x406E7E92 0
+endif
+pause 600
+//end section
 
 overhead 'ALL DONE! Nice Job' 44
