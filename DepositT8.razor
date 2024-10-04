@@ -1,8 +1,8 @@
-//version 3.0 05 giu 2024 by kentar
+//version 4.0 05 oct 2024 by kentar
 //script to put inside the T8 Senator chest all the shit :D
 //05 apr 2024 - added new map books, chroma aspect type
 //05 giu 2024 - added survival gear and update new items of WILDLANDS
-//28 set 2024 - fixed buuugggs
+//05 oct 2024 - fix bugs, create pushlist
 //id reference https://outlands.uorazorscripts.com/script/23d5660a-f8fd-491d-97b3-1afa3d73c84d
 
 overhead 'Start T8 Deposit'
@@ -67,23 +67,67 @@ wait 500
 
 setvar STUFFCHEST 0x54B1A6BD
 dclick STUFFCHEST
+removelist 'lootTypesT8'
 
-//carpet
-while findtype 2744|2750|2760|2771|2778|2799|4248|19717|22244|43166|43179|48405|48407 backpack as nicestuff
-overhead 'insert other nice stuffs in the chest'
-lift nicestuff 999
-pause 200
-drop STUFFCHEST -1 -1 0
-endwhile
-pause 600
-//other 11858 spellhuedeed - 51094 leaf - lantern 2594
-while findtype 11858|51094|2594 backpack as nicestuff
-overhead 'insert other nice stuffs in the chest'
-lift nicestuff 999
-pause 200
-drop STUFFCHEST -1 -1 0
-endwhile
-pause 600
+if not listexists 'lootTypesT8'
+    overhead 'Compiling list...' 1150
+    createlist 'lootTypesT8'
+   
+    # MCD, skill orb and RM
+	pushlist 'lootTypesT8' 0x42BF
+    pushlist 'lootTypesT8' 0x5740
+    pushlist 'lootTypesT8' 0x5F72
+	#plantchemical
+    pushlist 'lootTypesT8' 0x7166
+    #CHROMA
+    pushlist 'lootTypesT8' 0xFB9
+    pushlist 'lootTypesT8' 0xFBA
+    #3827|4225|12686|27611|37181 arcane scroll, arcane essence, collectable card, survival gear
+    pushlist 'lootTypesT8' 0xef3
+    pushlist 'lootTypesT8' 0x1081
+    pushlist 'lootTypesT8' 0x318E
+    pushlist 'lootTypesT8' 0x6BDB
+    pushlist 'lootTypesT8' 0x913D
+    #CARPET
+	pushlist 'lootTypesT8' 0xbd17
+	pushlist 'lootTypesT8' 0x1098
+	pushlist 'lootTypesT8' 0xA8BE
+    #OTHER 11858 spellhuedeed - 51094 leaf - lantern 2594
+    pushlist 'lootTypesT8' 0x2E52
+    pushlist 'lootTypesT8' 0xC796
+    pushlist 'lootTypesT8' 0xA22 
+    #5356 other maps
+    pushlist 'lootTypesT8' 0x14EC
+    #SEEDS
+    pushlist 'lootTypesT8' 0x5736
+	#dungeonseed
+	pushlist 'lootTypesT8' 0xc79a	
+	#plant soil
+    pushlist 'lootTypesT8' 0x1668
+    #JEWELS
+    pushlist 'lootTypesT8' 0xF10
+    pushlist 'lootTypesT8' 0xF13
+    pushlist 'lootTypesT8' 0xF15
+    pushlist 'lootTypesT8' 0xF16
+    pushlist 'lootTypesT8' 0xF19
+    pushlist 'lootTypesT8' 0xF21
+    pushlist 'lootTypesT8' 0xF25
+    pushlist 'lootTypesT8' 0xF26
+    pushlist 'lootTypesT8' 0xF2D
+        
+endif
+
+overhead 'deposit...' 1150
+foreach t in 'lootTypesT8'
+    while findtype t backpack as loot
+        getlabel loot lootLabel
+        overhead lootLabel 1150
+        lift loot 999
+        drop STUFFCHEST -1 -1 -1
+        wait 500
+    endwhile
+endfor
+
 
 while findtype 3821 backpack as GOLD
 overhead 'insert gold in STUFFCHEST'
@@ -96,74 +140,6 @@ pause 550
 ignore GOLD
 clearignore
 endwhile
-
-while findtype 5356 backpack as othermap
-overhead 'insert other Maps in the chest'
-lift othermap 999
-pause 200
-drop STUFFCHEST -1 -1 0
-endwhile
-pause 600
-
-//3827 arcane scroll  - 37181 Survival Gear
-while findtype 3827|4225|12686|2744|43166|48405|27611|37181 backpack as nicestuff
-overhead 'insert other nice stuffs in the chest'
-lift nicestuff 999
-pause 200
-drop STUFFCHEST -1 -1 0
-endwhile
-pause 600
-
-//seeds
-while findtype 2323|3703|3707|3715|4090|4154|4550|4551|5344|5453|6187|6193|6327|6328|6330|6333|6334|6335|6337|6338|6341|11942|19403|20498|20499|20500|20501|20502|20503|22326|25570|28719|28741|28987|29030|29217|29343|29345|29372|29868|51078|51098|51188|53611|54062|55139 backpack as seed
-    overhead 'insert seeds in the chest'
-lift seed 999
-pause 200
-drop STUFFCHEST -1 -1 0
-endwhile
-pause 600
-
-//jewels
-while findtype 3856|3859|3861|3862|3865|3873|3877|3878|3885 backpack as jewels
-    overhead 'insert jewels in the chest'
-lift jewels 999
-pause 200
-drop STUFFCHEST -1 -1 0
-endwhile
-pause 600
-
-//chroma
-while findtype 4025|4026 backpack as chroma
-    overhead 'insert chroma in the chest'
-lift chroma 999
-pause 200
-drop STUFFCHEST -1 -1 0
-endwhile
-pause 600
-
-//section for deposit MCD, skill orb and RM in the senator chest
-while findtype 17087 backpack as special
-    overhead 'insert MCD into T8 Senator Chest'
-    lift special 999
-    pause 200
-    drop STUFFCHEST -1 -1 0
-endwhile
-    pause 600
-while findtype 22336 backpack as special
-    overhead 'insert Skill Orb into T8 Senator Chest'
-    lift special 999
-    pause 200
-    drop STUFFCHEST -1 -1 0
-endwhile
-    pause 600
-while findtype 24434 backpack as special
-    overhead 'insert RM into T8 Senator Chest'
-    lift special 999
-    pause 200
-    drop STUFFCHEST -1 -1 0
-endwhile
-    pause 600
-//end section
     
 pause 200
 
@@ -171,12 +147,10 @@ pause 200
 if findtype 39889|39891|39892|39896|39897|39898|39905|39909|39911|39912|39916|39917|39918 backpack as special
     overhead 'insert Special Rune into Senator Chest'
     dclick 0x4058C1F3
-	pause 200
-	menu 0x406E7E92 0
+    pause 200
+    menu 0x406E7E92 0
 endif
 pause 600
-
-say "[aspectarmor lyric"
 //end section
 
 overhead 'ALL DONE! Nice Job' 44
